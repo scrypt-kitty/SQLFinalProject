@@ -1,24 +1,22 @@
-CREATE TABLE Orders_a
-         (donutOrderID int AUTO_INCREMENT,
-         PRIMARY KEY(donutOrderID),
+CREATE TABLE CustomerOrders_a
+         (donutOrderID int,
+         customerID int,
          firstName varchar(20),
          lastName varchar(20),
          address varchar(50),
          city varchar(20),
          state varchar(2),
          zip int,
-         homePhone varchar(15),
-         mobile varchar(15),
-         otherPhone varchar(15),
+         homePhone int,
+         mobile int,
+         otherPhone int,
          dateOfSale DATE,
-         customerID int,
          orderQty int,
          donutID int,
          donutName varchar(10),
          donutDescription varchar(20),
-         unitPrice decimal);
-		 
-
+         unitPrice decimal,
+         PRIMARY KEY(donutOrderID, customerID));
 		 
 CREATE TABLE Orders_b
          (donutOrderID int AUTO_INCREMENT,
@@ -26,10 +24,10 @@ CREATE TABLE Orders_b
          dateOfSale DATE,
          orderQty int,
          donutID int,
-         donutName varchar(10),
-         donutDescription varchar(20),
+         donutName varchar(20),
+         donutDescription varchar(100),
          unitPrice decimal);
-         
+
 CREATE TABLE Customers_b
          (customerID int AUTO_INCREMENT,
          PRIMARY KEY (customerID),
@@ -43,16 +41,10 @@ CREATE TABLE Customers_b
          mobile varchar(15),
          otherPhone varchar(15));
 
-ALTER TABLE Customers_b
- ADD COLUMN donutOrderID int,
- ADD FOREIGN KEY (donutOrderID) REFERENCES Orders_b(donutOrderID);
-
 ALTER TABLE Orders_b
- ADD COLUMN CustomerID int,
- ADD FOREIGN KEY (CustomerID) REFERENCES Customers_b(customerID);
- 
- 
- 
+ ADD COLUMN customerID int,
+ ADD FOREIGN KEY (customerID) REFERENCES Customers_b(customerID);
+
 CREATE TABLE Orders_c
          (donutOrderID int AUTO_INCREMENT,
          PRIMARY KEY (donutOrderID),
@@ -72,8 +64,6 @@ CREATE TABLE Customers_c
          mobile varchar(15),
          otherPhone varchar(15));
 
-
-
 CREATE TABLE Donuts_c
          (donutID int AUTO_INCREMENT,
          PRIMARY KEY (donutID),
@@ -82,12 +72,12 @@ CREATE TABLE Donuts_c
          unitPrice decimal);
 
 ALTER TABLE Orders_c
- ADD COLUMN CustomerID int,
- ADD FOREIGN KEY (CustomerID) REFERENCES Customers_c(customerID);
+ ADD COLUMN customerID int,
+ ADD FOREIGN KEY (customerID) REFERENCES Customers_c(customerID);
 
 ALTER TABLE Orders_c
  ADD COLUMN donutID int,
- ADD FOREIGN KEY (donutID) REFERENCES Donuts_c(donutID);
+ ADD FOREIGN KEY (donutID) REFERENCES Donuts_c(donutID);	 
  
 CREATE VIEW CUSTOMERS_VIEW AS
 SELECT CONCAT(firstName, ' ', lastName) AS 'Name', 
