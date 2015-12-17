@@ -124,7 +124,7 @@ INSERT Orders_c
 VALUES(1,
        1,
        date(20151207),
-       "none");
+       'none');
 
 INSERT Itemized_orders_c
 VALUES(1,
